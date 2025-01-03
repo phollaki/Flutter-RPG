@@ -1,6 +1,6 @@
-# rpg
+# RPG
 
-A new Flutter project.
+RPG flutter application.
 
 ## Getting Started
 
