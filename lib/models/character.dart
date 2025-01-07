@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rpg/models/skill.dart';
 import 'package:rpg/models/stats.dart';
 import 'package:rpg/models/vocation.dart';
@@ -31,22 +32,47 @@ class Character with Stats {
     skills.clear();
     skills.add(skill);
   }
-}
 
-// dummy character data
-List<Character> characters = [
-  Character(
-      id: '1', name: 'Klara', vocation: Vocation.wizard, slogan: 'Kapumf!'),
-  Character(
-      id: '2',
-      name: 'Jonny',
-      vocation: Vocation.junkie,
-      slogan: 'Light me up...'),
-  Character(
-      id: '3',
-      name: 'Crimson',
-      vocation: Vocation.raider,
-      slogan: 'Can`t catch me.'),
-  Character(
-      id: '4', name: 'Shaun', vocation: Vocation.ninja, slogan: 'Let`s do it!'),
-];
+  // character to firestore (map)
+  Map<String, dynamic> toFirestore() {
+    return {
+      'name': name,
+      'slogan': slogan,
+      'vocation': vocation.toString(),
+      'skills': skills.map((skill) => skill.id).toList(),
+      'stats': statsAsMap,
+      'points': points,
+      'isFav': _isFav,
+    };
+  }
+
+  // character from firestore
+  factory Character.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data()!;
+
+    final character = Character(
+      id: snapshot.id,
+      name: data['name'],
+      slogan: data['slogan'],
+      vocation: Vocation.values.firstWhere(
+        (vocation) => vocation.toString() == data['vocation'],
+      ),
+    );
+
+    for (String id in data['skills']) {
+      Skill skill = allSkills.firstWhere((element) => element.id == id);
+      character.updateSkill(skill);
+    }
+
+    if (data['isFav'] == true) {
+      character.toggleIsFav();
+    }
+
+    character.setStats(points: data['points'], stats: data['stats']);
+
+    return character;
+  }
+}

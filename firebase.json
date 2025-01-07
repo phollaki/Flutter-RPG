@@ -1,0 +1,31 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "flutter-rpg-96295",
+          "appId": "1:304558346701:android:0806e298127f352be87484",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "flutter-rpg-96295",
+          "appId": "1:304558346701:ios:f36db8b8ac3c07b3e87484",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "flutter-rpg-96295",
+          "configurations": {
+            "android": "1:304558346701:android:0806e298127f352be87484",
+            "ios": "1:304558346701:ios:f36db8b8ac3c07b3e87484",
+            "web": "1:304558346701:web:5ae1432e1fc0e9dbe87484"
+          }
+        }
+      }
+    }
+  }
+}
