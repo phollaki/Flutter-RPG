@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rpg/models/character.dart';
-import 'package:rpg/screens/profile/skill_list.dart';
 import 'package:rpg/shared/styled_text.dart';
 import 'package:rpg/theme.dart';
 
@@ -14,6 +13,8 @@ class StatsTable extends StatefulWidget {
 }
 
 class _StatsTableState extends State<StatsTable> {
+  double turns = 0;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,10 +26,15 @@ class _StatsTableState extends State<StatsTable> {
             padding: const EdgeInsets.all(8),
             child: Row(
               children: [
-                Icon(
-                  Icons.star,
-                  color:
-                      widget.character.points > 0 ? Colors.yellow : Colors.grey,
+                AnimatedRotation(
+                  duration: const Duration(milliseconds: 200),
+                  turns: turns,
+                  child: Icon(
+                    Icons.star,
+                    color: widget.character.points > 0
+                        ? Colors.yellow
+                        : Colors.grey,
+                  ),
                 ),
                 const SizedBox(width: 20),
                 const StyledText(text: "Available points: "),
@@ -74,6 +80,7 @@ class _StatsTableState extends State<StatsTable> {
                         color: AppColors.textColor,
                         onPressed: () {
                           setState(() {
+                            turns += 0.5;
                             widget.character.increaseStat(stat['title']!);
                           });
                         },
@@ -86,6 +93,7 @@ class _StatsTableState extends State<StatsTable> {
                         color: AppColors.textColor,
                         onPressed: () {
                           setState(() {
+                            turns -= 0.5;
                             widget.character.decreaseStat(stat['title']!);
                           });
                         },

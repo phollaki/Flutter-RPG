@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rpg/models/character.dart';
 import 'package:rpg/models/skill.dart';
-import 'package:rpg/shared/styled_button.dart';
 import 'package:rpg/shared/styled_text.dart';
 import 'package:rpg/theme.dart';
 
